@@ -1,0 +1,4 @@
+Olá prof, fiquei em dúvida se o exe que é criado pelo mac irá funcionar por serem plataformas e extensões diferentes, caso não funcione teria alguma maneira que eu possa enviar para funcionar na sua máquina?
+também tive um problema ao executar a linguagem, por algum motivo ele para de compilar no fatorial como se fosse a última etapa, removi uma parte do código e funcionou o restante, acredito que o exe foi criado sem os últimos exercícios, estou em busca de uma resolução ainda, porém o código está indo junto caso queira executa-lo completo.
+
+Obrigado!!                                                              - Emerson Tieppo.
