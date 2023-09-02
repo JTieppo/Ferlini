@@ -1,77 +1,103 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-typedef struct Node {
-    char question[100];
-    struct Node *yes;
-    struct Node *no;
-} Node;
+char tabuleiro[3][3]; // Tabuleiro 3x3
 
-Node* createNode(const char *question) {
-    Node *node = (Node*)malloc(sizeof(Node));
-    strcpy(node->question, question);
-    node->yes = NULL;
-    node->no = NULL;
-    return node;
-}
-
-void play(Node *root) {
-    char answer[10];
-    
-    if (root->yes == NULL && root->no == NULL) {
-        printf("É um(a) %s? (sim/nao): ", root->question);
-        scanf("%s", answer);
-        
-        if (strcmp(answer, "sim") == 0) {
-            printf("Acertei! :)\n");
-        } else {
-            char newAnimal[100];
-            printf("Qual animal você pensou? ");
-            scanf(" %[^\n]", newAnimal);
-            
-            char newQuestion[100];
-            printf("Me diga uma pergunta que distinga %s de %s: ", newAnimal, root->question);
-            scanf(" %[^\n]", newQuestion);
-            
-            char oldAnimal[100];
-            strcpy(oldAnimal, root->question);
-            
-            strcpy(root->question, newQuestion);
-            root->yes = createNode(newAnimal);
-            root->no = createNode(oldAnimal);
-        }
-    } else {
-        printf("%s (sim/nao): ", root->question);
-        scanf("%s", answer);
-        
-        if (strcmp(answer, "sim") == 0) {
-            play(root->yes);
-        } else {
-            play(root->no);
+void inicializarTabuleiro() {
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            tabuleiro[i][j] = ' ';
         }
     }
 }
 
-int main() {
-    Node *root = createNode("vive na água?");
-    root->yes = createNode("tubarão");
-    root->no = createNode("gato");
-
-    printf("Bem-vindo ao Adivinhe o Animal!\n");
-    printf("Pense em um animal e eu vou tentar adivinhar qual é.\n");
-    
-    do {
-        play(root);
-        
-        char playAgain[10];
-        printf("Quer jogar de novo? (sim/nao): ");
-        scanf("%s", playAgain);
-        
-        if (strcmp(playAgain, "nao") == 0) {
-            break;
+void imprimirTabuleiro() {
+    printf("  1 2 3\n");
+    for (int i = 0; i < 3; i++) {
+        printf("%d ", i + 1);
+        for (int j = 0; j < 3; j++) {
+            printf("%c", tabuleiro[i][j]);
+            if (j < 2) {
+                printf("|");
+            }
         }
-    } while (1);
+        printf("\n");
+        if (i < 2) {
+            printf("  -+-+-\n");
+        }
+    }
+}
+
+int verificarVitoria(char jogador) {
+    // Verificar linhas, colunas e diagonais
+    for (int i = 0; i < 3; i++) {
+        if (tabuleiro[i][0] == jogador && tabuleiro[i][1] == jogador && tabuleiro[i][2] == jogador) {
+            return 1; // Vitória na linha
+        }
+        if (tabuleiro[0][i] == jogador && tabuleiro[1][i] == jogador && tabuleiro[2][i] == jogador) {
+            return 1; // Vitória na coluna
+        }
+    }
+    if (tabuleiro[0][0] == jogador && tabuleiro[1][1] == jogador && tabuleiro[2][2] == jogador) {
+        return 1; // Vitória na diagonal principal
+    }
+    if (tabuleiro[0][2] == jogador && tabuleiro[1][1] == jogador && tabuleiro[2][0] == jogador) {
+        return 1; // Vitória na diagonal secundária
+    }
+    return 0; // Nenhuma vitória
+}
+
+int verificarEmpate() {
+    // Verificar se o jogo terminou em empate
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+            if (tabuleiro[i][j] == ' ') {
+                return 0; // Ainda há espaços vazios
+            }
+        }
+    }
+    return 1; // Não há espaços vazios, é um empate
+}
+
+int fazerJogada(int linha, int coluna, char jogador) {
+    // Verificar se a posição é válida e se está vazia
+    if (linha >= 1 && linha <= 3 && coluna >= 1 && coluna <= 3 && tabuleiro[linha - 1][coluna - 1] == ' ') {
+        tabuleiro[linha - 1][coluna - 1] = jogador;
+        return 1; // Jogada válida
+    }
+    return 0; // Jogada inválida
+}
+
+int main() {
+    int vez = 0; // 0 para jogador 1 e 1 para jogador 2
+    int linha, coluna;
+    char jogadorAtual = 'X';
+    int jogoTerminado = 0;
+
+    inicializarTabuleiro();
+
+    while (!jogoTerminado) {
+        imprimirTabuleiro();
+
+        printf("Jogador %c, digite a linha e a coluna (ex: 1 2): ", jogadorAtual);
+        scanf("%d %d", &linha, &coluna);
+
+        if (fazerJogada(linha, coluna, jogadorAtual)) {
+            if (verificarVitoria(jogadorAtual)) {
+                imprimirTabuleiro();
+                printf("Jogador %c venceu!\n", jogadorAtual);
+                jogoTerminado = 1;
+            } else if (verificarEmpate()) {
+                imprimirTabuleiro();
+                printf("O jogo terminou em empate!\n");
+                jogoTerminado = 1;
+            } else {
+                vez = 1 - vez;
+                jogadorAtual = (vez == 0) ? 'X' : 'O';
+            }
+        } else {
+            printf("Jogada inválida. Tente novamente.\n");
+        }
+    }
 
     return 0;
 }
