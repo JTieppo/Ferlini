@@ -7,6 +7,7 @@ int main() {
 
     char stringum[50] = "Olá, ";
     char stringdois[50] = "mundo!";
-    
+
     printf(strcat(stringum, stringdois));
+    return 0;
 }

@@ -9,4 +9,5 @@ int main() {
     char copianome[50];
     strcpy(copianome, nome);
     printf(copianome);
+    return 0;
 }
