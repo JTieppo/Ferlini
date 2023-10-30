@@ -1,0 +1,40 @@
+Leitura e Impressão:
+    Crie um programa que leia uma matriz 3x3 de
+    números inteiros e a imprima na tela.
+
+    Solicite 10 nomes e sobrenomes e armazene numa
+    matriz. Depois, apresente a matrizes inteira.
+
+    Solicite uma lista de nomes de alunos e receba as
+    notas de uma prova de um bimestre. No final
+    apresente a média de todas as notas, a maior nota (e
+    o nome do aluno) e a menor nota (e o nome do
+    aluno).
+
+Soma/Multiplicação de Matrizes:
+    Dadas duas matrizes 3x3, leia ambas e imprima a
+    matriz resultante da sua soma.
+
+    Solicite duas matrizes 10x10 (o usuário deverá
+    informar os números inteiros). E depois, numa
+    terceira matriz, atribuia o resultado da multiplicação
+    das matrizes.
+
+Diagonal Principal:
+    Leia e armazene uma matriz 4x4 e imprima os
+    elementos da diagonal principal.
+
+Transposta de uma Matriz:
+    Leia uma matriz 3x3 e imprima sua matriz transposta.
+
+Matriz Simétrica:
+    Verifique se uma matriz 3x3 lida é simétrica. Uma
+    matriz é simétrica se ela é igual à sua transposta.
+
+Maior Valor:
+    Leia uma matriz 4x4 e determine e imprima o maior
+    valor e sua localização (linha e coluna).
+
+Soma das Linhas:
+    Leia uma matriz 4x3 e imprima a soma dos
+    elementos de cada linha.
